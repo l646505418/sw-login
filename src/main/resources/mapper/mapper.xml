@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.schedulework.login.mapper.userloginMapper">
+
+    <resultMap id="loginUserMap" type="userLoginInfo">
+        <id property="id" column="id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="headImage" column="head_image"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="loginCount" column="login_count"/>
+        <result property="password" column="password"/>
+        <result property="registTime" column="regist_time"/>
+    </resultMap>
+    <update id="updateUserInfo" parameterType="userLoginInfo">
+        update login_user set head_image=#{headImage} where id=#{id}
+    </update>
+    <select id="findByNameAndPass" resultMap="loginUserMap">
+        SELECT * FROM login_user WHERE nickname=#{username} AND password=#{password}
+    </select>
+    <select id="findByName" resultMap="loginUserMap">
+        SELECT * FROM login_user WHERE nickname=#{username}
+    </select>
+    <select id="findById" resultMap="loginUserMap">
+        select * from login_user where id=#{id}
+    </select>
+    <insert id="insertUser" parameterType="userLoginInfo" >
+        insert into login_user (nickname,head_image,last_login_time,login_count,password,regist_time) values(#{nickname},
+        #{headImage},#{lastLoginTime},#{loginCount},#{password},#{registTime})
+        <!-- 在插入后返回特定的值-->
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select id from login_user where nickname= #{nickname}
+        </selectKey>
+
+    </insert>
+</mapper>
