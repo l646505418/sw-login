@@ -30,6 +30,7 @@ userLoginService userLoginService;
     //TODO:write code for this part
     @PostMapping(path = "/addProtofile")
     backResponse doEditInfo(@RequestBody userLoginInfo newUserInfo){
+        //TODO:add json validate logic
         return null;
 
     }
