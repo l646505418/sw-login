@@ -4,6 +4,7 @@ package com.schedulework.login.service.serviceImpl;
 import com.schedulework.login.Entity.userLoginInfo;
 import com.schedulework.login.mapper.userloginMapper;
 import com.schedulework.login.service.userLoginService;
+import com.schedulework.login.util.JWTUtil;
 import com.schedulework.login.vo.backResponse;
 import com.schedulework.login.vo.responseEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class userLoginServiceImpl implements userLoginService {
         if(user==null){
             return new backResponse(responseEnum.USER_NOT_FOUND.getStatusCode(),responseEnum.USER_NOT_FOUND.getStatusDescription(),null);
         }
+
         return new backResponse(responseEnum.LOGIN_SUCCESS.getStatusCode(),responseEnum.LOGIN_SUCCESS.getStatusDescription(),(Object) user);
     }
 
@@ -36,7 +38,8 @@ public class userLoginServiceImpl implements userLoginService {
         }
         userLoginInfo userInfo=new userLoginInfo(username,password);
         int userId=userloginMapper.insertUser(userInfo);
-        return new backResponse(responseEnum.LOGON_SUCCESS.getStatusCode(),responseEnum.LOGON_SUCCESS.getStatusDescription(),userId);
+        String token= JWTUtil.createToken(username);
+        return new backResponse(responseEnum.LOGON_SUCCESS.getStatusCode(),responseEnum.LOGON_SUCCESS.getStatusDescription(),new Object[]{userId,token});
 
     }
 }
