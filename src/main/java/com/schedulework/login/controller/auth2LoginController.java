@@ -1,6 +1,7 @@
 package com.schedulework.login.controller;
 
 
+import com.schedulework.login.util.oauth2LoginGithub;
 import com.schedulework.login.util.oauth2LoginGoogle;
 import com.schedulework.login.vo.backResponse;
 import com.schedulework.login.vo.responseEnum;
@@ -23,6 +24,8 @@ import java.io.IOException;
 public class auth2LoginController {
     @Autowired
     oauth2LoginGoogle oauth2LoginGoogle;
+    @Autowired
+    oauth2LoginGithub oauth2LoginGithub;
     @PostMapping(path = "/auth2/google")
     backResponse auth2GoogleLogin(HttpServletResponse response) {
         String authUrl= oauth2LoginGoogle.oauth2Login();
@@ -31,6 +34,17 @@ public class auth2LoginController {
         } catch (IOException e){
             log.error(String.format("something happend when log in :%s",e.getMessage()));
     return new backResponse(responseEnum.LOGIN_FAILED.getStatusCode(),responseEnum.LOGIN_FAILED.getStatusDescription(),null);
+        }
+        return new backResponse(responseEnum.LOGIN_PROCESING.getStatusCode(),responseEnum.LOGIN_PROCESING.getStatusDescription(),null);
+    }
+    @PostMapping(path = "/auth2/github")
+    backResponse auth2GithubLogin(HttpServletResponse response) {
+        String authUrl= oauth2LoginGithub.oauth2Login();
+        try{
+            response.sendRedirect(authUrl);
+        } catch (IOException e){
+            log.error(String.format("something happend when log in :%s",e.getMessage()));
+            return new backResponse(responseEnum.LOGIN_FAILED.getStatusCode(),responseEnum.LOGIN_FAILED.getStatusDescription(),null);
         }
         return new backResponse(responseEnum.LOGIN_PROCESING.getStatusCode(),responseEnum.LOGIN_PROCESING.getStatusDescription(),null);
     }

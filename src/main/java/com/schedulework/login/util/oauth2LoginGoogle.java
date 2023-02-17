@@ -18,13 +18,9 @@ import java.util.HashMap;
 @Slf4j
 @Data
 public class oauth2LoginGoogle extends Ouath2LoginTemplate {
-    @Value("${miaosha.baseServerUrl}")
-    private String baseInnerAuthApi;
     private String grantType;
     private HashMap<String,String> scopeUrl;
 
-    @Autowired
-    RestTemplate restTemplate;
     public oauth2LoginGoogle(Builder builder){
         super(builder);
         this.grantType="authorization_code";

@@ -2,6 +2,7 @@ package com.schedulework.login.controller;
 
 
 import com.schedulework.login.util.JWTUtil;
+import com.schedulework.login.util.oauth2LoginGithub;
 import com.schedulework.login.util.oauth2LoginGoogle;
 import com.schedulework.login.vo.backResponse;
 import com.schedulework.login.vo.responseEnum;
@@ -33,10 +34,12 @@ public class loginCallBackController {
     @Autowired
  oauth2LoginGoogle oauth2LoginGoogle;
     @Autowired
+    oauth2LoginGithub oauth2LoginGithub;
+    @Autowired
     RestTemplate restTemplate;
 
-    @RequestMapping(value = "login/callback",method = RequestMethod.GET)
-    public backResponse redirectApi(@RequestParam String code, @RequestParam String scope, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "google/callback",method = RequestMethod.GET)
+    public backResponse redirectGoogleApi(@RequestParam String code, @RequestParam String scope, HttpServletResponse response) throws IOException {
         log.info(code+scope);
         log.info("auth successfully,start get token");
         HttpHeaders httpHeaders=new HttpHeaders();
@@ -50,6 +53,27 @@ public class loginCallBackController {
         ResponseEntity<String> responseEntity;
         try {
             responseEntity= restTemplate.postForEntity(oauth2LoginGoogle.getBaseTokenUri(), httpEntity, String.class);
+        }catch (Exception e){
+            log.warn (String.format("there are some errors happend when get token:%s",e.getMessage()));
+            return new backResponse(responseEnum.LOGIN_FAILED.getStatusCode(),responseEnum.LOGIN_FAILED.getStatusDescription(),null);
+        }
+        log.info("successfully get token ");
+        return new backResponse(responseEnum.LOGIN_SUCCESS.getStatusCode(),responseEnum.LOGIN_SUCCESS.getStatusDescription(),(Object) responseEntity.getBody());
+    }
+    @RequestMapping(value = "github/callback",method = RequestMethod.GET)
+    public backResponse redirectGithubApi(@RequestParam String code,  HttpServletResponse response) throws IOException {
+        log.info(code);
+        log.info("auth successfully,start get token");
+        HttpHeaders httpHeaders=new HttpHeaders();
+//        httpHeaders.setContentType(MediaType.valueOf(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+////        httpHeaders.add("Content-Type","application/x-www-form-urlencoded");
+//        MultiValueMap<String,String> paramMap=new LinkedMultiValueMap<>();
+//        paramMap.add("client_id", oauth2LoginGithub.getClientId());
+//        paramMap.add("code",code);
+        HttpEntity<MultiValueMap<String,String>> httpEntity=new HttpEntity<>(httpHeaders);
+        ResponseEntity<String> responseEntity;
+        try {
+            responseEntity= restTemplate.postForEntity(oauth2LoginGithub.getTokenUri(code), httpEntity, String.class);
         }catch (Exception e){
             log.warn (String.format("there are some errors happend when get token:%s",e.getMessage()));
             return new backResponse(responseEnum.LOGIN_FAILED.getStatusCode(),responseEnum.LOGIN_FAILED.getStatusDescription(),null);
