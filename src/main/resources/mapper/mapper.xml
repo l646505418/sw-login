@@ -15,7 +15,7 @@
         <result property="registTime" column="regist_time"/>
     </resultMap>
     <update id="updateUserInfo" parameterType="userLoginInfo">
-        update login_user set head_image=#{headImage} where id=#{id}
+        update login_user set head_image=#{userInfo.headImage},nickname=#{userInfo.nickname},password=#{userInfo.password},last_login_time=curtime() where id=#{userInfo.id}
     </update>
     <select id="findByNameAndPass" resultMap="loginUserMap">
         SELECT * FROM login_user WHERE nickname=#{username} AND password=#{password}
@@ -26,9 +26,9 @@
     <select id="findById" resultMap="loginUserMap">
         select * from login_user where id=#{id}
     </select>
-    <insert id="insertUser" parameterType="userLoginInfo" >
-        insert into login_user (nickname,head_image,last_login_time,login_count,password,regist_time) values(#{nickname},
-        #{headImage},#{lastLoginTime},#{loginCount},#{password},#{registTime})
+    <insert id="insertUser" parameterType="userLoginInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into login_user (nickname,head_image,last_login_time,login_count,password,regist_time) values(#{userInfo.nickname},
+        #{userInfo.headImage},curtime(),#{userInfo.loginCount},#{userInfo.password},curtime())
         <!-- 在插入后返回特定的值-->
         <selectKey keyProperty="id" resultType="int" order="AFTER">
             select id from login_user where nickname= #{nickname}
