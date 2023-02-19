@@ -51,7 +51,7 @@ public class userEditInfoServiceImpl implements userEditInfoService {
 
 
     private void compAndEnrich(userLoginInfo oldUserInfo, userLoginInfo newUserInfo){
-        CompletableFuture completableFuture=CompletableFuture.runAsync(()->{
+        CompletableFuture.runAsync(()->{
             log.info("compare and enrich headImage");
             oldUserInfo.setHeadImage(newUserInfo.getHeadImage()==null? newUserInfo.getHeadImage() : oldUserInfo.getHeadImage());
         });

@@ -62,6 +62,23 @@ public class oauth2LoginGoogle extends Ouath2LoginTemplate {
         log.info(String.format("the token url is : %s",tokenUri));
         return tokenUri;
     }
+
+    @Override
+    public HashMap<String, String> getAccessToken(String code) {
+        return null;
+    }
+
+    @Override
+    public HashMap<String, String> parseTokenResponse(String response) {
+        return null;
+    }
+
+    @Override
+    public HashMap<String, String> getUserInfo(String token) {
+        return null;
+    }
+
+
     public static class Builder extends Ouath2LoginTemplate.Builder{
         @Override
         public Ouath2LoginTemplate build() {

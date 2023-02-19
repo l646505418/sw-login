@@ -4,6 +4,8 @@ package com.schedulework.login.util;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
+
 /**
  * @author:Li Jinming
  * @Description:template for oauth2 login
@@ -48,6 +50,9 @@ public abstract class Ouath2LoginTemplate {
 
     public abstract  String getAuthorizationUri() ;
     public abstract String getTokenUri(String code);
+    public abstract HashMap<String,String> getAccessToken(String code);
+    public abstract HashMap<String,String> parseTokenResponse(String response);
+    public abstract HashMap<String,String> getUserInfo(String token);
 
     public abstract static  class Builder{
         private String clientId;

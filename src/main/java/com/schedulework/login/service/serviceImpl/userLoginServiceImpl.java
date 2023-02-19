@@ -38,8 +38,7 @@ public class userLoginServiceImpl implements userLoginService {
         }
         userLoginInfo userInfo=new userLoginInfo(username,password);
         int userId=userloginMapper.insertUser(userInfo);
-        String token= JWTUtil.createToken(username);
-        return new backResponse(responseEnum.LOGON_SUCCESS.getStatusCode(),responseEnum.LOGON_SUCCESS.getStatusDescription(),new Object[]{userId,token});
+        return new backResponse(responseEnum.LOGON_SUCCESS.getStatusCode(),responseEnum.LOGON_SUCCESS.getStatusDescription(),new Object[]{ userId,username});
 
     }
 }
