@@ -5,7 +5,7 @@
 
 <!--核心配置文件-->
 <configuration>
-<!--    <properties resource="application-dev.yaml"/>-->
+
     <typeAliases>
         <package name="com.schedulework.login.Entity"/> <!--替换成你的项目的实体类的路径-->
     </typeAliases>

@@ -43,7 +43,7 @@ public class restTemplateConfig {
     public oauth2LoginGithub oauth2LoginGithubBean(){
         return (oauth2LoginGithub) new oauth2LoginGithub.Builder()
                 .ClientId("48c953032195a367f00a")
-                .ClientSecret("2f5ccdd3c80263c4a87f2641f4c3ed0b9fc00b54")
+                .ClientSecret("5589bb7c8d63f76a3369d86410ca98a9e7237c8b")
                 .AuthEndPoint(new authEndPoint("http://localhost:9001/github/callback"))
                 .Scope(new String[]{"user,repo"})
                 .BaseAuthorizationUri("https://github.com/login/oauth/authorize")
