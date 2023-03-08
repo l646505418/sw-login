@@ -1,0 +1,28 @@
+spring:
+  #  profiles:
+  #    active: lcoal
+  config:
+    activate:
+      on-profile:
+        - prod
+#    thymeleaf:
+#        cache: false
+  datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://172.18.0.1:30006/schedulework?useUnicode=true&characterEncodeing=UTF-8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: 123456
+        ##连接池
+        hikari:
+            pool-name: PoolConnectPool
+server:
+  port: 9001
+mybatis:
+  ##mapper.xml存放位置
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.schedulework.login.Entity
+  #config-location: classpath:mybatis/mybatis-config.xml
+
+oauth2:
+    github:
+      userInfoUrl: https://api.github.com/user

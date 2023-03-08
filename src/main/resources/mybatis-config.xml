@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--核心配置文件-->
+<configuration>
+
+    <typeAliases>
+        <package name="com.schedulework.login.Entity"/> <!--替换成你的项目的实体类的路径-->
+    </typeAliases>
+    <!--  关联xml配置的文件  -->
+    <mappers>
+        <mapper resource="src/main/resources/mapper/mapper.xml"/>
+    </mappers>
+</configuration>
