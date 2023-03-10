@@ -2,7 +2,9 @@ pipeline {
     agent any
     stages {
         stage("compile") {
+          steps{
             sh "mvn package"
+            }
 
 //            parallel {
 //                stage(“Build image”) {
@@ -22,7 +24,9 @@ pipeline {
             }
         }
         stage("deploy the login"){
+        steps{
             sh "docker run -p 9001:9001 -d --name login jinmingli/${env.JOB_NAME}:${BUILDTAG}"
+            }
         }
     }
 }
