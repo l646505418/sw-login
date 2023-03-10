@@ -3,8 +3,9 @@ pipeline {
     stages {
         stage("compile") {
           steps{
-            sh "git config --global user.email 646505418@qq.com"
-              sh  "git config --global user.name lijinming"
+            sh "git config --global user.email \"646505418@qq.com\""
+              sh  "git config --global user.name \"lijinming\""
+
             sh "mvn package"
             }
 
