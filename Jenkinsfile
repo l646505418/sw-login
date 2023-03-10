@@ -15,16 +15,10 @@ pipeline {
         }
         stage("build image"){
             steps{
-                step("login to the server"){
                     sh "docker login --username=l646505418@gmail.com -p=ljm1999115"
-                }
-                step("build the login image"){
                     sh "docker build -t ${env.JOB_NAME}:${BUILDTAG} ."
                     sh "docker tag ${env.JOB_NAME}:${BUILDTAG} jinmingli/${env.JOB_NAME}:${BUILDTAG}"
-                }
-                step("push the login image"){
                     sh "docker push jinmingli/${env.JOB_NAME}:${BUILDTAG}"
-                }
             }
         }
         stage("deploy the login"){
