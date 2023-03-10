@@ -24,7 +24,7 @@ pipeline {
             }
         }
         stage("deploy the login"){
-        step{
+        steps{
             sh "docker run -p 9001:9001 -d --name login jinmingli/${env.JOB_NAME}:${BUILDTAG}"
             }
         }
